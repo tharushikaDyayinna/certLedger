@@ -1,0 +1,38 @@
+import streamlit as st
+from PIL import Image
+from streamlit_extras.switch_page_button import switch_page
+
+# Configure the page to keep the sidebar open by default
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+
+# Initialize session_state for 'profile'
+if 'profile' not in st.session_state:
+    st.session_state['profile'] = None
+
+st.title("Certificate Validation System")
+st.write("")
+st.subheader("Select Your Role")
+
+col1, col2 = st.columns(2)
+
+# Load images
+institite_logo = Image.open("../assets/institute_logo.png")
+company_logo = Image.open("../assets/company_logo.jpg")
+
+# Institute column
+with col1:
+    st.image(institite_logo, output_format="jpg", width=230)
+    clicked_institute = st.button("Institute")
+
+# Verifier column
+with col2:
+    st.image(company_logo, output_format="jpg", width=230)
+    clicked_verifier = st.button("Verifier")
+
+# Handle button clicks and update session_state
+if clicked_institute:
+    st.session_state.profile = "Institute"
+    switch_page('login')
+elif clicked_verifier:
+    st.session_state.profile = "Verifier"
+    switch_page('login')
